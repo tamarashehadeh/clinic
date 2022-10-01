@@ -158,12 +158,14 @@
              rounded
              color="primary"
              :disabled="invalid"
+             :to="{name: 'appoitment'}"
                  >
              Boom Appointment
              </v-btn>
             <v-btn class="gbtn pl-6 pr-6 ml-5 mt-n2"
              rounded
              color="primary"
+              :to="{name: 'registerpatient'}"
                  >
              New patient
              </v-btn>

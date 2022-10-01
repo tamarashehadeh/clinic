@@ -28,6 +28,7 @@
            <v-btn class="gbtn"
              rounded
              color="primary"
+              :to="{name: 'appoitment'}"
                  >
              Make an appointment
              </v-btn>
@@ -71,7 +72,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .gbtn{
   background: rgb(86,129,229);
 background: linear-gradient(90deg, rgba(86,129,229,1) 0%, rgba(54,193,248,1) 100%);

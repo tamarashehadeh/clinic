@@ -54,14 +54,14 @@
         <span class="mr-2">Contact us</span>
       </v-btn>
          </v-hover>
-      <v-btn class="gbtn"
+             <v-btn class="gbtn  pa-6"
              rounded
              color="primary"
                  >
             <v-icon left color="white" >
               mdi-phone
              </v-icon>
-             0999999999
+             0999  999  999
              </v-btn>
         </div>
     </v-app-bar>
