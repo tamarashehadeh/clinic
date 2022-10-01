@@ -13,98 +13,57 @@
             v-vue-aos="{ animationClass: 'animate__fadeInRight animate__animated' }"
             width="1000"
             height="100%"
-            class=" background"
+            class=" background mt-12"
             elevation="5"
             shaped
           >
             <v-card-title class="text-h4">
-                Register
+                Register Patient
             </v-card-title>
               <form
                 class="my-8 "
                 @submit.prevent="submit"
               >
                   <v-text-field
-                    v-model="name"
+                    v-model="Name"
                     class="mx-12"
                     color="#000000"
                     :counter="13"
                     :error-messages="errors"
-                    label="First name"
+                    label="First Name"
                     required
                   />
                   <v-text-field
-                    v-model="last_name"
+                    v-model="LastName"
                     class="mx-12"
                     color="#000000"
                     :counter="13"
                     :error-messages="errors"
-                    label="Last name"
+                    label="Last Name"
                     required
                   />
-                  <v-text-field
-                    v-model="phone"
+                    <v-checkbox
+                  v-model="isvip"
+                   label="Is VIP"
                     class="mx-12"
-                    :error-messages="errors"
-                    label="phone"
-                    required
-                  />
-                  <v-text-field
-                    v-model="username"
-                    class="mx-12"
-                    color="#000000"
-                    :counter="13"
-                    :error-messages="errors"
-                    label="User name"
-                    required
-                  />
+                     >
+                    </v-checkbox>
                       <v-select
                   v-model="select"
                   class="mx-12"
+                  :items="department"
+                 :rules="[v => !!v || 'Item is required']"
+                  label="Department"
+                  required
+                    ></v-select>
+                      <v-select
+                  v-model="select"
+                  class="mx-12 mb-5"
                   :items="gender"
                  :rules="[v => !!v || 'Item is required']"
                   label="Gender"
                   required
                     ></v-select>
-                  <v-text-field
-                    v-model="email"
-                    class="mx-12"
-                    color="#000000"
-                    :error-messages="errors"
-                    label="email"
-                    required
-                  />
-                  <v-text-field
-                    v-model="password"
-                    color="#000000"
-                    class="mx-12 text-dark"
-                    type="password"
-                    :error-messages="errors"
-                    label="Password"
-                    required
-                  />
-                  <v-text-field
-                    v-model="role_id"
-                    color="#000000"
-                    class="mx-12 text-dark mb-6"
-                    :error-messages="errors"
-                    label="role "
-                    required
-                  />
-                  <v-text-field
-                    v-model="address"
-                    color="#000000"
-                    class="mx-12 text-dark mb-6"
-                    :error-messages="errors"
-                    label="Address"
-                    required
-                  />
-                  <template>
-  <v-row justify="center">
-    <v-date-picker v-model="date_of_birth"></v-date-picker>
-  </v-row>
-</template>
-
                  <v-btn class="gbtn rounded-5 mx-7"
                       rounded
                        type="submit"
@@ -113,6 +72,32 @@
                          >
                       Submit
                     </v-btn>
+                <v-dialog
+                  v-model="dialog"
+                  width="100"
+                >
+                  <v-card>
+                    <v-card-title
+                      class="text-h5 amber lighten-2"
+                    >
+                      Wrong login
+                    </v-card-title>
+
+                    <v-card-text class="text-center mt-5">
+                      Please try again
+                    </v-card-text>
+                    <v-divider />
+                    <v-card-actions>
+                      <v-spacer />
+                      <v-btn
+                        color="#F5CE3F"
+                        @click="dialog = false"
+                      >
+                       ok
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
                      <v-btn class="gbtn pl-6 pr-6 rounded-5 mx-7"
                       rounded
                      color="primary"
@@ -146,55 +131,56 @@
 export default {
   data: () => ({
     password: '',
-    phone: '',
-    name: '',
-    email: '',
-    last_name: '',
-    username: '',
+    phoneNumber: '',
+    Name: '',
+    dialog: '',
+    password_confirmation: '',
+    LastName: '',
+    UserName: '',
+    department: [
+      'department 1',
+      'department 2',
+      'department 3',
+      'department 4'
+    ],
     gender: [
       'Male',
       'Female'
     ],
-    role_id: '',
-    address: '',
-    date_of_birth: ''
+    isvip: false
 
   }),
 
   methods: {
     submit () {
       const payload = {
-        password: this.password,
-        password_confirmation: this.password_confirmation,
-        phone: this.phone,
-        username: this.username,
-        last_name: this.last_name,
-        email: this.email,
-        name: this.name,
+        phone_number: this.phoneNumber,
+        LastName: this.LastName,
+        name: this.Name,
+        department: this.department,
         gender: this.gender,
-        role_id: this.role_id,
-        address: this.address,
-        date_of_birth: this.date_of_birth
+        isvip: this.isvip
       }
-      // const self = this
+      const self = this
 
-      this.axios.post('/http://127.0.0.1:8000/api/user', payload).then(res => {
-        alert('heelo')
-        // alert(res)
+      this.axios.post('/register', payload).then(res => {
+        if (res.data.message === 'register was successful') {
+          localStorage.setItem('token', res.data.data.token)
+          self.$store.state.token = res.data.data.token
+          window.location = '/'
+        } else {
+          this.dialog = true
+        }
+        this.$refs.observer.validate()
       })
     },
     clear () {
-      this.password = ''
-      this.password_confirmation = ''
       this.phoneNumber = ''
-      this.username = ''
-      this.last_name = ''
-      this.email = ''
+      this.Name = ''
+      this.LastName = ''
       this.department = ''
       this.gender = ''
-      this.role_id = ''
-      this.address = ''
-      this.date_of_birth = ''
+      this.isvip = false
       this.$refs.observer.reset()
     }
   }
