@@ -24,6 +24,64 @@ const routes = [
     name: 'register',
     component: () =>
       import(/* webpackChunkName: "register" */ '../views/RegisterUser.vue')
+  },
+  {
+    path: '/registerpatient',
+    name: 'registerpatient',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/RegisterPatient.vue')
+  },
+  {
+    path: '/diagnosis',
+    name: 'diagnosis',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/DoctorDiagnosis.vue')
+  },
+  {
+    path: '/appoitmentR',
+    name: 'readappoitment',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/ReadAppoitment.vue')
+  },
+  {
+    path: '/appoitment',
+    name: 'appoitment',
+    component: () =>
+      import(
+        /* webpackChunkName: "register" */ '../views/CreateAppoitment.vue'
+      )
+  },
+  {
+    path: '/Role_Service',
+    name: 'Role_service',
+    component: () =>
+      import(
+        /* webpackChunkName: "register" */ '../views/ManageRoleService.vue'
+      )
+  },
+  {
+    path: '/addrole',
+    name: 'addrole',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/AddRole.vue')
+  },
+  {
+    path: '/addservice',
+    name: 'addservice',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/AddService.vue')
+  },
+  {
+    path: '/viewroles',
+    name: 'viewroles',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/ViewRoles.vue')
+  },
+  {
+    path: '/medtest',
+    name: 'medicaltest',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/MedicalTest.vue')
   }
 ]
 
